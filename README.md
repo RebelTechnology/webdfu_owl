@@ -1,6 +1,6 @@
-# webdfu_numworks
+# webdfu_owl
 
-This is a fork from the [WebDFU](https://devanlai.github.io/webdfu/dfu-util/) demo (WebUSB DFU), but tailored for dumping/flashing the [NumWorks](https://numworks.com) calculator.
+This is a fork from the [WebDFU](https://devanlai.github.io/webdfu/dfu-util/) demo (WebUSB DFU), tailored for flashing OWL devices using the legacy DFU bootloader.
 
 
 ### Note from the original Readme:
