@@ -7,6 +7,24 @@
     <script src="dfuse.js"></script>
     <script src="FileSaver.js"></script>
     <script src="dfu-util.js"></script>
+    <script>
+      function enableAdvanced(advanced){
+	  var d = 'none';
+	  var v = 'hidden'
+	  if(advanced){
+	      d = '';
+	      v = 'visible';
+	      document.getElementById('enable-advanced').disabled = true;
+	  }else{
+	      document.getElementById('enable-advanced').disabled = false;
+	  }
+	  var e = ["download_internal", "upload_internal"];
+	  for(el of e){
+	      document.getElementById(el).style.display = d;
+	      document.getElementById(el).style.visibility = v;
+	  }
+      }
+    </script>
     <style>
       p.warning {
         color: red;
@@ -35,7 +53,7 @@
       <input type="text" name="pid" id="pid" maxlength="6" size="8" pattern="0x[A-Fa-f0-9]{1,4}"/>
     </p>
     <p style="text-align: center;">
-      Plug in your OWL while holding down the LED button, then click here:<br>
+      Plug in your OWL while holding down the LED button, then click Connect:<br>
       <button id="connect">Connect to OWL</button>
     </p>
     <dialog id="interfaceDialog">
@@ -65,10 +83,8 @@
 
         <legend style="display: none;">DFU mode</legend>
         <fieldset>
-          <legend>Flash firmware or bootloader onto device</legend>
-          <p>
-            <input type="file" id="firmwareFile" name="file" disabled="true"/>
-          </p>
+          <legend>Flash firmware or bootloader binary onto device</legend>
+          <p><input type="file" id="firmwareFile" name="file" disabled="true"/></p>
           <p>
             <button id="download_internal" hidden="true" style="display: none; visibility: hidden" disabled="true">Flash bootloader</button>
             <button id="download_external" disabled="true">Flash firmware</button>
@@ -76,7 +92,7 @@
           <div class="log" id="downloadLog"></div>
         </fieldset>
         <fieldset>
-          <legend>Dump flash from device</legend>
+          <legend>Dump flash binary from device</legend>
           <p>
             <button id="upload_internal" hidden="true" style="display: none; visibility: hidden" disabled="true">Dump bootloader</button>
             <button id="upload_external" disabled="true">Dump firmware</button>
@@ -96,6 +112,9 @@
           <li>On Linux, that means that the current user must have permission to access the device.</li>
           <li>On macOS and ChromeBooks, it should work directly.</li>
         </ul>
+      </p>
+      <p>In advanced mode, WebUSB can also be used to reflash the OWL bootloader. Note that no validation is done on the uploaded binary: This may corrupt the bootloader on the device!
+	<button id="enable-advanced" onclick="enableAdvanced(true)">Enable advanced mode</button>
       </p>
     </footer>
   </body>
